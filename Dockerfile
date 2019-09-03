@@ -7,7 +7,7 @@ LABEL maintainer="Patrick Windmiller <sysadmin@pstat.ucsb.edu>"
 USER $NB_UID
 
 
-# Install spaCy packages
+# Install spaCy, pandas, scikit-learn, matplotlib, nltk and mplcursors packages
 RUN conda install -c conda-forge spacy && \
     conda install --quiet -y pandas && \
     conda install --quiet -y scikit-learn && \
