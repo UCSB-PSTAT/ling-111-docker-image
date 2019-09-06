@@ -17,3 +17,8 @@ RUN conda install -c conda-forge spacy && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# Adding language model to Spacy
+RUN python -m spacy download en
+
+RUN python -m spacy download en_core_web_md
