@@ -1,14 +1,23 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+
+# changed to mikebirdgeneau/jupyterlab:latest
 FROM jupyter/scipy-notebook
 
 LABEL maintainer="Patrick Windmiller <sysadmin@pstat.ucsb.edu>"
 
 USER $NB_UID
 
+RUN pip install --upgrade pip
 
-# Install spaCy, pandas, scikit-learn, matplotlib, nltk and mplcursors packages
+# Install Jupyter Lab
+RUN pip install jupyterlab && jupyter serverextension enable --py jupyterlab
+
+# Install spaCy, pandas, scikit-learn, ipympl, matplotlib, nltk and mplcursors packages
 RUN conda install -c conda-forge spacy && \
+    conda install -c conda-forge widgetsnbextension && \
+    conda install -c conda-forge ipympl && \
+    conda install -c conda-forge widgetsnbextension && \
     conda install --quiet -y pandas && \
     conda install --quiet -y scikit-learn && \
     conda install --quiet -y matplotlib && \
@@ -17,6 +26,13 @@ RUN conda install -c conda-forge spacy && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# If using JupyterLab
+RUN conda install nodejs
+
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
+
+RUN jupyter labextension install jupyter-matplotlib
 
 # Adding language model to Spacy
 RUN python -m spacy download en
