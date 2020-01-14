@@ -22,12 +22,12 @@ RUN conda install -y nodejs && \
 
 # Install spaCy, pandas, scikit-learn, ipympl, matplotlib, nltk and mplcursors packages
 RUN conda install -c conda-forge spacy && \
-#    conda install -c conda-forge widgetsnbextension && \
+    conda install -c conda-forge widgetsnbextension && \
     conda install -c conda-forge ipympl && \
-#    conda install -c conda-forge widgetsnbextension && \
+    conda install -c conda-forge widgetsnbextension && \
     conda install --quiet -y pandas && \
     conda install --quiet -y scikit-learn && \
-#    conda install --quiet -y matplotlib && \
+    conda install --quiet -y matplotlib && \
     conda install --quiet -y nltk && \
     conda install --quiet -y mplcursors && \
     conda clean -tipsy && \
@@ -38,3 +38,5 @@ RUN conda install -c conda-forge spacy && \
 RUN python -m spacy download en
 
 RUN python -m spacy download en_core_web_md
+
+RUN pip install --upgrade jupyterlab
