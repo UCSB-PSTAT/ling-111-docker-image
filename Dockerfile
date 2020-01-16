@@ -10,5 +10,22 @@ USER $NB_UID
 
 RUN pip install ipympl && \
     jupyter labextension install jupyter-matplotlib && \
-    jupyter labextension update --all && \
-    rm /opt/conda/share/jupyter/lab/extensions/jupyter-matplotlib-0.4.*
+    jupyter labextension update --all
+
+RUN conda install -c conda-forge spacy && \
+    conda install -c conda-forge ipympl && \
+    conda install --quiet -y nltk && \
+    conda install --quiet -y mplcursors
+#    conda clean -tipsy && \
+#    fix-permissions $CONDA_DIR && \
+#    fix-permissions /home/$NB_USER
+    
+# Adding language model to Spacy
+RUN python -m spacy download en
+
+RUN python -m spacy download en_core_web_md
+
+RUN rm /opt/conda/share/jupyter/lab/extensions/jupyter-matplotlib-0.4.*
+
+RUN pip install --upgrade jupyterlab && \
+    jupyter-lab build
